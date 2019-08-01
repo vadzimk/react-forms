@@ -5,15 +5,32 @@ export class Editor extends React.Component {
 
     state = {
         nameInput: "", //instead of name
+        flavor: "Vanilla",
+        toppings: ["Strawberries"]
     };
 
-    updateFormValue=(event)=>{
+
+    flavors = ["Chocolate", "Double Chocolate", "Triple Chocolate", "Vanilla"];
+    toppings = ["Sprinkles", "Fudge Sauce", "Strawberries", "Maple Syrop"];
+
+    updateFormValue = (event) => {
         this.setState(
             {
                 [event.target.name]: event.target.value
             },
-            ()=>this.props.submit(this.state)
+            () => this.props.submit(this.state)
         )
+    };
+
+
+    updateFormValueOptions = (event) => {
+        let options = [...event.target.options].filter(o => o.selected).map(o => o.value);
+        this.setState(
+            {
+                [event.target.name]: options
+            },
+            () => this.props.submit(this.state)
+        );
     };
 
     render() {
@@ -27,6 +44,37 @@ export class Editor extends React.Component {
                            onChange={this.updateFormValue}
                            placeholder="input name"
                     />
+                </div>
+                <div className="form-group">
+                    <label>Ice Cream Flavors</label>
+                    <select
+                        className="form-control"
+                        name="flavor"
+                        value={this.state.flavor}
+                        onChange={this.updateFormValue}
+                    >
+                        {this.flavors.map(flavor =>
+                            <option value={flavor} key={flavor}>
+                                {flavor}
+                            </option>
+                        )}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label>Ice Cream Toppings</label>
+                    <select
+                        className="form-control"
+                        multiple={true}
+                        name="toppings"
+                        value={this.state.toppings}
+                        onChange={this.updateFormValueOptions}
+                    >
+                        {this.toppings.map(top=>
+                            <option value={top} key={top}>
+                                {top}
+                            </option>
+                        )}
+                    </select>
                 </div>
             </div>
         )
