@@ -6,7 +6,7 @@ export class Editor extends React.Component {
     state = {
         nameInput: "", //instead of name
         flavor: "Vanilla",
-        toppings: ["Strawberries"]
+        // toppings: ["Strawberries"]
     };
 
 
@@ -45,36 +45,57 @@ export class Editor extends React.Component {
                            placeholder="input name"
                     />
                 </div>
+                {/*<div className="form-group">*/}
+                {/*<label>Ice Cream Flavors</label>*/}
+                {/*<select*/}
+                {/*className="form-control"*/}
+                {/*name="flavor"*/}
+                {/*value={this.state.flavor}*/}
+                {/*onChange={this.updateFormValue}*/}
+                {/*>*/}
+                {/*{this.flavors.map(flavor =>*/}
+                {/*<option value={flavor} key={flavor}>*/}
+                {/*{flavor}*/}
+                {/*</option>*/}
+                {/*)}*/}
+                {/*</select>*/}
+                {/*</div>*/}
+                {/*<div className="form-group">*/}
+                {/*<label>Ice Cream Toppings</label>*/}
+                {/*<select*/}
+                {/*className="form-control"*/}
+                {/*multiple={true} //multiple selection of options*/}
+                {/*name="toppings"*/}
+                {/*value={this.state.toppings}*/}
+                {/*onChange={this.updateFormValueOptions}*/}
+                {/*>*/}
+                {/*{this.toppings.map(top=>*/}
+                {/*<option value={top} key={top}>*/}
+                {/*{top}*/}
+                {/*</option>*/}
+                {/*)}*/}
+                {/*</select>*/}
+                {/*</div>*/}
+
+                {/********* radioButtons ********/}
+
                 <div className="form-group">
-                    <label>Ice Cream Flavors</label>
-                    <select
-                        className="form-control"
-                        name="flavor"
-                        value={this.state.flavor}
-                        onChange={this.updateFormValue}
-                    >
-                        {this.flavors.map(flavor =>
-                            <option value={flavor} key={flavor}>
-                                {flavor}
-                            </option>
-                        )}
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label>Ice Cream Toppings</label>
-                    <select
-                        className="form-control"
-                        multiple={true} //multiple selection of options
-                        name="toppings"
-                        value={this.state.toppings}
-                        onChange={this.updateFormValueOptions}
-                    >
-                        {this.toppings.map(top=>
-                            <option value={top} key={top}>
-                                {top}
-                            </option>
-                        )}
-                    </select>
+                    <label>
+                        Ice Cream Flavors
+                    </label>
+                    {this.flavors.map(flavor =>
+                        <div className="form-check" key={flavor}>
+                            <input className="form-check-input"
+                                   type="radio"
+                                   name="flavor"
+                                   value={flavor}
+                                   checked={this.state.flavor === flavor}
+                                   onChange={this.updateFormValue}
+                                   id={flavor}
+                            />
+                            <label for={flavor} className="form-check-label">{flavor}</label>
+                        </div>
+                    )}
                 </div>
             </div>
         )
