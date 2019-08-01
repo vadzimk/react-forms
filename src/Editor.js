@@ -22,7 +22,7 @@ export class Editor extends React.Component {
         )
     };
 
-
+//handle multiple selections
     updateFormValueOptions = (event) => {
         let options = [...event.target.options].filter(o => o.selected).map(o => o.value);
         this.setState(
@@ -64,7 +64,7 @@ export class Editor extends React.Component {
                     <label>Ice Cream Toppings</label>
                     <select
                         className="form-control"
-                        multiple={true}
+                        multiple={true} //multiple selection of options
                         name="toppings"
                         value={this.state.toppings}
                         onChange={this.updateFormValueOptions}
