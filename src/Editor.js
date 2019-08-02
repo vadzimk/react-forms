@@ -6,7 +6,8 @@ export class Editor extends React.Component {
     state = {
         nameInput: "", //instead of name
         flavor: "Vanilla",
-        // toppings: ["Strawberries"]
+        // toppings: ["Strawberries"],
+        twoScoops: false,
     };
 
 
@@ -30,6 +31,15 @@ export class Editor extends React.Component {
                 [event.target.name]: options
             },
             () => this.props.submit(this.state)
+        );
+    };
+
+    updateFormValueCheck = (event) => {
+        this.setState(
+            {
+                [event.target.name]: event.target.checked,
+            },
+            ()=>this.props.submit(this.state)
         );
     };
 
@@ -96,6 +106,20 @@ export class Editor extends React.Component {
                             <label for={flavor} className="form-check-label">{flavor}</label>
                         </div>
                     )}
+                </div>
+                <div className="form-group">
+                    <div className="form-check">
+                        <input id="twoScoops"
+                               className="form-check-input"
+                               type="checkbox"
+                               name="twoScoops"
+                               checked={this.state.twoScoops}
+                               onChange={this.updateFormValueCheck}
+                        />
+                        <label for="twoScoops" className="form-check-label">
+                            Two Scoops
+                        </label>
+                    </div>
                 </div>
             </div>
         )
