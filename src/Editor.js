@@ -8,6 +8,7 @@ export class Editor extends React.Component {
         flavor: "Vanilla",
         toppings: [],
         twoScoops: false,
+        comments: "",
     };
 
 
@@ -160,6 +161,18 @@ export class Editor extends React.Component {
                             </div>
                         )
                     }
+                </div>
+
+                <div className="form-group">
+                    <label>
+                        Comments
+                    </label>
+                    <textarea
+                        className="form-control"
+                        name="comments"
+                        value={this.state.comments}
+                        onChange={this.updateFormValue}
+                    />
                 </div>
             </div>
         )
