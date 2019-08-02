@@ -6,7 +6,7 @@ export class Editor extends React.Component {
     state = {
         nameInput: "", //instead of name
         flavor: "Vanilla",
-        // toppings: ["Strawberries"],
+        toppings: [],
         twoScoops: false,
     };
 
@@ -39,7 +39,21 @@ export class Editor extends React.Component {
             {
                 [event.target.name]: event.target.checked,
             },
-            ()=>this.props.submit(this.state)
+            () => this.props.submit(this.state)
+        );
+    };
+
+    updateFormValueCheckArray = (event) => {
+        event.persist(); //does not set properties of synthaticEvent to null after the first call of setState
+        this.setState((state) => {
+                if (event.target.checked) {
+                    state.toppings.push(event.target.name);
+                } else {
+                    let index = state.toppings.indexOf(event.target.name); //find the index of unchecked element
+                    state.toppings.splice(index, 1); //remove elements starting at index, count=1 element
+                }
+            }, () =>
+                this.props.submit(this.state)
         );
     };
 
@@ -120,6 +134,32 @@ export class Editor extends React.Component {
                             Two Scoops
                         </label>
                     </div>
+                </div>
+
+                <div className="form-group">
+                    <label>Ice Cream Toppings</label>
+                    {
+                        this.toppings.map(top =>
+                            <div className="form-check" key={top}>
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    name={top}
+                                    value={this.state[top]}
+                                    checked={this.state.toppings.indexOf(top) > -1}
+                                    onChange={this.updateFormValueCheckArray}
+                                    id={top}
+                                />
+                                <label
+                                    for={top}
+                                    className="form-check-label"
+                                >
+                                    {top}
+                                </label>
+
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         )
