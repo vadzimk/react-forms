@@ -4,17 +4,20 @@
 
 
 import React from 'react';
-import {validation as ValidateData} from "validation";
+import {validateData as ValidateData} from "./validation";
 import {ValidationContext} from "./ValidationContext";
 
 export class FormValidator extends React.Component {
-    state = {
-        errors: {},
-        dirty: {},
-        formSubmitted: false,
-        getMessagesForField: this.getMessagesForField,
-    };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            errors: {},
+            dirty: {},
+            formSubmitted: false,
+            getMessagesForField: this.getMessagesForField, //error getMessagesForField is not a function pops up when you are not using a constructor
+        };
+    }
 
     // static method getDerivedStateFromProps returns a new state data object that is derived from state data. Because it is static it is unable to access any of the instance methods or properties  via this keyword.
     static getDerivedStateFromProps(props, state) {
