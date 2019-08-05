@@ -9,6 +9,13 @@ export class Editor extends React.Component {
         toppings: [],
         twoScoops: false,
         comments: "",
+        email: "",
+    };
+
+    rules = {
+      name: {required: true, minlength: 3, alpha: true},
+      email: {required: true, email: true},
+      comments: {required: false},
     };
 
 
@@ -20,7 +27,7 @@ export class Editor extends React.Component {
             {
                 [event.target.name]: event.target.value
             },
-            () => this.props.submit(this.state)
+            // () => this.props.submit(this.state)
         )
     };
 
