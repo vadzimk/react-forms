@@ -4,22 +4,26 @@ import {ValidationMessage} from "./ValidationMessage";
 
 export class Editor extends React.Component {
 
+    constructor(props) {
+        super(props);
 
-    state = {
-        nameInput: "", //instead of name
-        flavor: "Vanilla",
-        toppings: [],
-        twoScoops: false,
-        comments: "",
-        email: "",
-    };
+        this.state = {
+            nameInput: "", //instead of name
+            terms: false,
+            // flavor: "Vanilla",
+            // toppings: [],
+            // twoScoops: false,
+            // comments: "",
+            // email: "",
+        };
 
-    rules = {
-        name: {required: true, minlength: 3, alpha: true},
-        email: {required: true, email: true},
-        comments: {required: false},
-    };
-
+        this.rules = {
+            name: {required: true, minlength: 3, alpha: true},
+            terms: {true: true}, //ensures that the checkbox of terms of use is checked true
+            // email: {required: true, email: true},
+            // comments: {required: false},
+        };
+    }
 
     flavors = ["Chocolate", "Double Chocolate", "Triple Chocolate", "Vanilla"];
     toppings = ["Sprinkles", "Fudge Sauce", "Strawberries", "Maple Syrop"];
@@ -31,6 +35,14 @@ export class Editor extends React.Component {
             },
             // () => this.props.submit(this.state)
         )
+    };
+
+    updateFormValueCheck = (event) => {
+        this.setState(
+            {
+                [event.target.name]: event.target.checked,
+            }
+        );
     };
 
 // //handle multiple selections
@@ -82,6 +94,20 @@ export class Editor extends React.Component {
                         <ValidationMessage field="name"/>
                     </div>
 
+                    <div className="form-group">
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                name="terms"
+                                checked={this.state.terms}
+                                onChange={this.updateFormValueCheck}
+                            />
+                            <label className="form-check-label">Agree to terms</label>
+                        </div>
+                        <ValidationMessage field="terms"/>
+                    </div>
+
                     <div>
                         <label>Email</label>
                         <input
@@ -128,63 +154,63 @@ export class Editor extends React.Component {
                     {/********* radioButtons ********/}
 
                     {/*<div className="form-group">*/}
-                        {/*<label>*/}
-                            {/*Ice Cream Flavors*/}
-                        {/*</label>*/}
-                        {/*{this.flavors.map(flavor =>*/}
-                            {/*<div className="form-check" key={flavor}>*/}
-                                {/*<input className="form-check-input"*/}
-                                       {/*type="radio"*/}
-                                       {/*name="flavor"*/}
-                                       {/*value={flavor}*/}
-                                       {/*checked={this.state.flavor === flavor}*/}
-                                       {/*onChange={this.updateFormValue}*/}
-                                       {/*id={flavor}*/}
-                                {/*/>*/}
-                                {/*<label for={flavor} className="form-check-label">{flavor}</label>*/}
-                            {/*</div>*/}
-                        {/*)}*/}
+                    {/*<label>*/}
+                    {/*Ice Cream Flavors*/}
+                    {/*</label>*/}
+                    {/*{this.flavors.map(flavor =>*/}
+                    {/*<div className="form-check" key={flavor}>*/}
+                    {/*<input className="form-check-input"*/}
+                    {/*type="radio"*/}
+                    {/*name="flavor"*/}
+                    {/*value={flavor}*/}
+                    {/*checked={this.state.flavor === flavor}*/}
+                    {/*onChange={this.updateFormValue}*/}
+                    {/*id={flavor}*/}
+                    {/*/>*/}
+                    {/*<label for={flavor} className="form-check-label">{flavor}</label>*/}
+                    {/*</div>*/}
+                    {/*)}*/}
                     {/*</div>*/}
 
                     {/*<div className="form-group">*/}
-                        {/*<div className="form-check">*/}
-                            {/*<input id="twoScoops"*/}
-                                   {/*className="form-check-input"*/}
-                                   {/*type="checkbox"*/}
-                                   {/*name="twoScoops"*/}
-                                   {/*checked={this.state.twoScoops}*/}
-                                   {/*onChange={this.updateFormValueCheck}*/}
-                            {/*/>*/}
-                            {/*<label for="twoScoops" className="form-check-label">*/}
-                                {/*Two Scoops*/}
-                            {/*</label>*/}
-                        {/*</div>*/}
+                    {/*<div className="form-check">*/}
+                    {/*<input id="twoScoops"*/}
+                    {/*className="form-check-input"*/}
+                    {/*type="checkbox"*/}
+                    {/*name="twoScoops"*/}
+                    {/*checked={this.state.twoScoops}*/}
+                    {/*onChange={this.updateFormValueCheck}*/}
+                    {/*/>*/}
+                    {/*<label for="twoScoops" className="form-check-label">*/}
+                    {/*Two Scoops*/}
+                    {/*</label>*/}
+                    {/*</div>*/}
                     {/*</div>*/}
 
                     {/*<div className="form-group">*/}
-                        {/*<label>Ice Cream Toppings</label>*/}
-                        {/*{*/}
-                            {/*this.toppings.map(top =>*/}
-                                {/*<div className="form-check" key={top}>*/}
-                                    {/*<input*/}
-                                        {/*className="form-check-input"*/}
-                                        {/*type="checkbox"*/}
-                                        {/*name={top}*/}
-                                        {/*value={this.state[top]}*/}
-                                        {/*checked={this.state.toppings.indexOf(top) > -1}*/}
-                                        {/*onChange={this.updateFormValueCheckArray}*/}
-                                        {/*id={top}*/}
-                                    {/*/>*/}
-                                    {/*<label*/}
-                                        {/*for={top}*/}
-                                        {/*className="form-check-label"*/}
-                                    {/*>*/}
-                                        {/*{top}*/}
-                                    {/*</label>*/}
+                    {/*<label>Ice Cream Toppings</label>*/}
+                    {/*{*/}
+                    {/*this.toppings.map(top =>*/}
+                    {/*<div className="form-check" key={top}>*/}
+                    {/*<input*/}
+                    {/*className="form-check-input"*/}
+                    {/*type="checkbox"*/}
+                    {/*name={top}*/}
+                    {/*value={this.state[top]}*/}
+                    {/*checked={this.state.toppings.indexOf(top) > -1}*/}
+                    {/*onChange={this.updateFormValueCheckArray}*/}
+                    {/*id={top}*/}
+                    {/*/>*/}
+                    {/*<label*/}
+                    {/*for={top}*/}
+                    {/*className="form-check-label"*/}
+                    {/*>*/}
+                    {/*{top}*/}
+                    {/*</label>*/}
 
-                                {/*</div>*/}
-                            {/*)*/}
-                        {/*}*/}
+                    {/*</div>*/}
+                    {/*)*/}
+                    {/*}*/}
                     {/*</div>*/}
 
                     <div className="form-group">
