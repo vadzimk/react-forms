@@ -7,6 +7,8 @@ import React from 'react';
 import {validateData as ValidateData} from "./validation";
 import {ValidationContext} from "./ValidationContext";
 
+
+
 export class FormValidator extends React.Component {
 
     constructor(props) {
@@ -21,9 +23,20 @@ export class FormValidator extends React.Component {
 
     // static method getDerivedStateFromProps returns a new state data object that is derived from state data. Because it is static it is unable to access any of the instance methods or properties  via this keyword.
     static getDerivedStateFromProps(props, state) {
-        return {
-            errors: ValidateData(props.data, props.rules)
+
+        state.errors = ValidateData(props.data, props.rules);
+
+        if (state.formSubmitted && Object.keys(state.errors).length === 0) {
+            let formErrors = props.ValidateForm(props.data); //returns an array of strings
+            if (formErrors.length > 0) {
+                state.errors.form = formErrors;
+            }
         }
+        return state;
+
+        // return {
+        //     errors: ValidateData(props.data, props.rules)
+        // }
     }
 
     handleChange = (ev) => {
@@ -48,13 +61,16 @@ export class FormValidator extends React.Component {
             },
             () => {
                 if (this.formValid) {
-                    this.props.submit(this.props.data)
+                    let formErrors = this.props.ValidateForm(this.props.data);
+                    if (formErrors.length === 0) {
+                        this.props.submit(this.props.data)
+                    }
                 }
             }
         );
     };
 
-    getMessagesForField=(field)=>{
+    getMessagesForField = (field) => {
         return ((this.state.formSubmitted || this.state.dirty[field])
             ? this.state.errors[field] || []
             : []);
@@ -64,7 +80,8 @@ export class FormValidator extends React.Component {
 
         return <>
             <ValidationContext.Provider value={this.state}>
-                <div onChange={this.handleChange}> {/*the change event bubbles up from the form elements contained by the component */}
+                <div
+                    onChange={this.handleChange}> {/*the change event bubbles up from the form elements contained by the component */}
                     {this.props.children}
                 </div>
             </ValidationContext.Provider>
