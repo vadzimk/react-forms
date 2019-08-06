@@ -14,13 +14,15 @@ export class Editor extends React.Component {
             // toppings: [],
             // twoScoops: false,
             // comments: "",
-            // email: "",
+            email: "",
+            emailConfirm: "",
         };
 
         this.rules = {
             name: {required: true, minlength: 3, alpha: true},
             terms: {true: true}, //ensures that the checkbox of terms of use is checked true
-            // email: {required: true, email: true},
+            email: {required: true, email: true, equals: "emailConfirm"},
+            emailConfirm: {required: true, email: true, equals: "email"},
             // comments: {required: false},
         };
     }
@@ -108,7 +110,7 @@ export class Editor extends React.Component {
                         <ValidationMessage field="terms"/>
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label>Email</label>
                         <input
                             className="form-control"
@@ -117,6 +119,17 @@ export class Editor extends React.Component {
                             onChange={this.updateFormValue}
                         />
                         <ValidationMessage field="email"/>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Confirm email</label>
+                        <input
+                            className="form-control"
+                            name="emailConfirm"
+                            value={this.state.emailConfirm}
+                            onChange={this.updateFormValue}
+                        />
+                        <ValidationMessage field="emailConfirm"/>
                     </div>
 
                     {/*<div className="form-group">*/}
